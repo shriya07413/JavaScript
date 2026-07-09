@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Symbiosis Institute of Technology, Nagpur | CSE Department</title>
+
+<!-- Linking external CSS file -->
+<link rel="stylesheet" href="style.css" />
+
+<!-- Google Font for clean typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ===================== NAVIGATION BAR ===================== -->
+<header>
+<nav class="navbar">
+<div class="nav-logo">
+<span class="logo-icon">🎓</span>
+<span class="logo-text">SIT Nagpur | CSE</span>
+</div>
+
+<!-- Hamburger icon for mobile view -->
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#department">Department</a></li>
+<li><a href="#student">Student Information</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+</header>
+
+<!-- ===================== HERO SECTION ===================== -->
+<section id="home" class="hero">
+<!-- Decorative floating blobs for visual richness -->
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="hero-content">
+<span class="hero-badge">🎓 Department of Computer Science Engineering</span>
+<h1>Welcome to Symbiosis Institute of Technology, Nagpur</h1>
+<p class="hero-subtitle">Department of Computer Science Engineering</p>
+<p class="hero-desc">
+Empowering future innovators with strong foundations in programming,
+software engineering, artificial intelligence, and modern computing
+technologies through quality education and hands-on learning.
+</p>
+
+<!-- This div is where JS will print "Welcome to SIT Nagpur" dynamically -->
+<div id="jsWelcomeMessage" class="js-welcome-box"></div>
+
+<!-- Button to scroll smoothly to Student Information section -->
+<button class="btn btn-primary" onclick="scrollToStudent()">View Student Information</button>
+</div>
+</section>
+
+<!-- ===================== DEPARTMENT SECTION ===================== -->
+<section id="department" class="section department-section">
+<h2 class="section-title reveal">About the Department</h2>
+<div class="glass-card department-card reveal">
+<p>
+The Department of Computer Science Engineering at Symbiosis Institute
+of Technology, Nagpur is committed to producing industry-ready
+engineers equipped with strong programming skills, analytical
+thinking, and problem-solving abilities. The department offers a
+curriculum that blends core computer science fundamentals with
+emerging technologies such as Artificial Intelligence, Machine
+Learning, Web Development, and Cloud Computing — preparing students
+to excel in the ever-evolving tech industry.
+</p>
+
+<div class="dept-highlights">
+<div class="highlight-box">
+<div class="icon-badge">💻</div>
+<p>Modern Computer Labs</p>
+</div>
+<div class="highlight-box">
+<div class="icon-badge">👨‍🏫</div>
+<p>Experienced Faculty</p>
+</div>
+<div class="highlight-box">
+<div class="icon-badge">🚀</div>
+<p>Industry Projects</p>
+</div>
+<div class="highlight-box">
+<div class="icon-badge">🌐</div>
+<p>Latest Technologies</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== STUDENT INFORMATION SECTION ===================== -->
+<section id="student" class="section student-section">
+<h2 class="section-title reveal">Student Information</h2>
+
+<div class="glass-card student-card reveal">
+<div class="student-card-top">
+<!-- Placeholder profile picture since no actual photo is provided -->
+<div class="profile-pic">
+<span>No DP Available</span>
+</div>
+<div class="student-name-block">
+<h3 id="studentName">Shriya Sanjay Yerane</h3>
+<p class="student-role">B.Tech - Computer Science Engineering</p>
+</div>
+</div>
+
+<div class="student-details-grid">
+<div class="detail-item">
+<span class="detail-label">PRN</span>
+<span class="detail-value">24070521197</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Semester</span>
+<span class="detail-value">IV</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Section</span>
+<span class="detail-value">C</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Batch</span>
+<span class="detail-value">2023-27</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Department</span>
+<span class="detail-value">Computer Science Engineering</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">College</span>
+<span class="detail-value">Symbiosis Institute of Technology, Nagpur</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Email</span>
+<span class="detail-value">shriya.yerane.batch2024@sitnagpur.siu.edu.in</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Phone</span>
+<span class="detail-value">+91 9876543210</span>
+</div>
+</div>
+
+<div class="skills-hobbies-wrap">
+<div class="skills-box">
+<h4>Skills</h4>
+<div class="tag-list">
+<span class="tag">HTML</span>
+<span class="tag">CSS</span>
+<span class="tag">JavaScript</span>
+<span class="tag">C Programming</span>
+<span class="tag">Python</span>
+<span class="tag">Web Development</span>
+</div>
+</div>
+
+<div class="hobbies-box">
+<h4>Hobbies</h4>
+<div class="tag-list">
+<span class="tag tag-alt">Coding</span>
+<span class="tag tag-alt">Sports</span>
+<span class="tag tag-alt">Reading</span>
+<span class="tag tag-alt">Learning New Technologies</span>
+</div>
+</div>
+</div>
+
+<!-- Button that shows student info using JavaScript (JS requirement #6) -->
+<button class="btn btn-secondary" onclick="showStudentInfo()">Show Student Info (via JavaScript)</button>
+
+<!-- This is where JS will dynamically insert student info text -->
+<div id="jsStudentOutput" class="js-output-box"></div>
+</div>
+</section>
+
+<!-- ===================== JAVASCRIPT PRACTICAL SECTION ===================== -->
+<section class="section js-section">
+<h2 class="section-title reveal">JavaScript Practical Features</h2>
+
+<div class="js-features-grid">
+
+<!-- Digital Clock -->
+<div class="glass-card feature-card reveal">
+<div class="icon-badge">🕒</div>
+<h3>Digital Clock</h3>
+<p id="digitalClock" class="clock-text">--:--:--</p>
+<p id="currentDate" class="date-text">Loading date...</p>
+</div>
+
+<!-- Time-based Greeting -->
+<div class="glass-card feature-card reveal">
+<div class="icon-badge">👋</div>
+<h3>Greeting</h3>
+<p id="greetingText" class="greeting-text">Loading greeting...</p>
+</div>
+
+<!-- Background Color Changer -->
+<div class="glass-card feature-card reveal">
+<div class="icon-badge">🎨</div>
+<h3>Change Background</h3>
+<p>Click the button to change the webpage background color.</p>
+<button class="btn btn-primary" onclick="changeBackgroundColor()">Change Background Color</button>
+</div>
+
+<!-- Alert Button -->
+<div class="glass-card feature-card reveal">
+<div class="icon-badge">🔔</div>
+<h3>Welcome Alert</h3>
+<p>Click to trigger a welcome alert message via </p>
+<button class="btn btn-secondary" onclick="showWelcomeAlert()">Show Welcome Alert</button>
+</div>
+
+</div>
+</section>
+
+<!-- ===================== CONTACT SECTION ===================== -->
+<section id="contact" class="section contact-section">
+<h2 class="section-title reveal">Contact</h2>
+<div class="glass-card contact-card reveal">
+<p><strong>College:</strong> Symbiosis Institute of Technology, Nagpur</p>
+<p><strong>Department:</strong> Computer Science Engineering</p>
+<p><strong>Student:</strong> Shriya Sanjay Yerane</p>
+<p><strong>Email:</strong> <a href="mailto:shriya.yerane.batch2024@sitnagpur.siu.edu.in">shriya.yerane.batch2024@sitnagpur.siu.edu.in</a></p>
+<p><strong>Phone:</strong> +91 9876543210</p>
+</div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+<p>&copy; <span id="footerYear"></span> Symbiosis Institute of Technology, Nagpur | Department of Computer Science Engineering</p>
+<p class="footer-sub">Designed by Shriya Sanjay Yerane | Semester IV | PRN: 24070521197</p>
+</footer>
+
+<!-- Linking external JavaScript file -->
+<script src="script.js"></script>
+</body>
+</html>
