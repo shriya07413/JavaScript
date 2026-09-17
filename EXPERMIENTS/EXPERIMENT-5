@@ -1,0 +1,53 @@
+
+const cart = [
+    { name: "Book", price: 300, quantity: 2 },
+    { name: "Pen", price: 20, quantity: 5 },
+    { name: "Bag", price: 500, quantity: 1 },
+];
+
+const discountRules = [
+    { minTotal: 2000, rate: 0.15, label: "15% off" },
+    { minTotal: 1000, rate: 0.10, label: "10% off" },
+    { minTotal: 500, rate: 0.05, label: "5% off" },
+];
+
+const calculateSubtotal = item => item.price * item.quantity;
+
+const getDiscountRate = total => {
+    const rule = discountRules.find(rule => total >= rule.minTotal);
+    return rule ? rule.rate : 0;
+};
+
+const calculateCartTotal = cartItems => {
+    const cartWithSubtotal = cartItems.map(item => ({
+        ...item,
+        subtotal: calculateSubtotal(item),
+    }));
+
+    const total = cartWithSubtotal.reduce((sum, item) => sum + item.subtotal, 0);
+    const discountRate = getDiscountRate(total);
+    const discount = total * discountRate;
+    const finalAmount = total - discount;
+
+    return {
+        cartWithSubtotal,
+        total,
+        discountRate,
+        discount,
+        finalAmount,
+    };
+};
+
+const printCartSummary = ({ cartWithSubtotal, total, discountRate, discount, finalAmount }) => {
+    console.log("Cart items:");
+    cartWithSubtotal.forEach(item => {
+        console.log(`- ${item.name}: ${item.quantity} × ${item.price} = ${item.subtotal}`);
+    });
+
+    console.log("Total Amount:", total);
+    console.log(`Discount (${discountRate * 100}%):`, discount);
+    console.log("Final Amount:", finalAmount);
+};
+
+const result = calculateCartTotal(cart);
+printCartSummary(result);
