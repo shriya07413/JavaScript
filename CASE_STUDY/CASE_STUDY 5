@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JANHAVI ADMANE (24070521211)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        h1, h2 { color: #2c3e50; margin-top: 0; }
+        h2 { margin-top: 20px; font-size: 1.2rem; }
+        p { color: #555; margin-bottom: 15px; }
+
+        /* Input & Button Section */
+        .input-section { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        input {
+            padding: 10px; font-size: 16px;
+            border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 120px;
+        }
+        button {
+            padding: 10px 14px; font-size: 14px;
+            color: white; border: none; border-radius: 4px;
+            cursor: pointer; transition: background 0.2s; white-space: nowrap;
+        }
+        .btn-add { background-color: #3498db; }
+        .btn-add:hover { background-color: #2980b9; }
+        .btn-manipulate { background-color: #8e44ad; }
+        .btn-manipulate:hover { background-color: #7d3c98; }
+        .btn-clear { background-color: #e74c3c; }
+        .btn-clear:hover { background-color: #c0392b; }
+
+        /* Output Boxes */
+        .output-box {
+            background-color: #272822; color: #f8f8f2;
+            padding: 15px; border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap; line-height: 1.6;
+            margin-top: 8px; font-size: 14px; min-height: 40px;
+        }
+        .highlight-max { color: #a6e22e; font-weight: bold; }
+        .highlight-min { color: #f92672; font-weight: bold; }
+        .log-entry { color: #ae81ff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ✅ Fixed typo: "dashbaord" → "Dashboard" -->
+    <h1>JS Array Study Dashboard</h1>
+    <p>Add numbers to build your array, then use manipulation buttons to see <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, and <code>slice</code> in action.</p>
+
+    <!-- Input + All Manipulation Buttons -->
+    <div class="input-section">
+        <input type="number" id="num-input" placeholder="Type a number...">
+        <button class="btn-add" onclick="addNumber()">Push (Add)</button>
+        <button class="btn-manipulate" onclick="manipulate('pop')">Pop</button>
+        <button class="btn-manipulate" onclick="manipulate('shift')">Shift</button>
+        <button class="btn-manipulate" onclick="manipulate('unshift')">Unshift</button>
+        <button class="btn-manipulate" onclick="manipulate('slice')">Slice(1,3)</button>
+        <button class="btn-clear" onclick="clearArray()">Reset</button>
+    </div>
+
+    <h2>Current Array Status</h2>
+    <div id="array-display" class="output-box">Array is empty.</div>
+
+    <h2>Operation Log</h2>
+    <div id="operation-log" class="output-box">No operations yet.</div>
+
+    <h2>Case Study: Max &amp; Min (for loop)</h2>
+    <div id="case-study-output" class="output-box">Waiting for numbers...</div>
+
+    <h2>Array Iterator Methods</h2>
+    <div id="methods-output" class="output-box">Waiting for numbers...</div>
+</div>
+
+<script>
+    let userNumbers = [];
+    let logEntries = [];
+
+    // ─── ADD NUMBER (push) ──────────────────────────────
+    function addNumber() {
+        const inputField = document.getElementById("num-input");
+        const inputValue = inputField.value.trim();
+
+        if (inputValue === "") { alert("Please enter a valid number."); return; }
+
+        const num = Number(inputValue);
+        if (isNaN(num)) { alert("Invalid number."); return; }
+
+        userNumbers.push(num);
+        addLog(`push(${num}) → added to end`);
+        inputField.value = "";
+        inputField.focus();
+        updateDashboard();
+    }
+
+    // ─── MANIPULATE ARRAY ───────────────────────────────
+    function manipulate(operation) {
+        if (userNumbers.length === 0 && operation !== 'unshift') {
+            addLog(`⚠ ${operation}() called on empty array — no effect`);
+            updateDashboard();
+            return;
+        }
+
+        switch (operation) {
+            case 'pop': {
+                const removed = userNumbers.pop();
+                addLog(`pop() → removed "${removed}" from end`);
+                break;
+            }
+            case 'shift': {
+                const removed = userNumbers.shift();
+                addLog(`shift() → removed "${removed}" from start`);
+                break;
+            }
+            case 'unshift': {
+                const inputField = document.getElementById("num-input");
+                const val = Number(inputField.value.trim());
+                if (isNaN(val)) { alert("Enter a number first for unshift."); return; }
+                userNumbers.unshift(val);
+                addLog(`unshift(${val}) → added to start`);
+                inputField.value = "";
+                break;
+            }
+            case 'slice': {
+                const sliced = userNumbers.slice(1, 3);
+                addLog(`slice(1,3) → [${sliced.join(', ')}] (original unchanged)`);
+                break;
+            }
+        }
+        updateDashboard();
+    }
+
+    // ─── CLEAR ARRAY ────────────────────────────────────
+    function clearArray() {
+        userNumbers = [];
+        logEntries = [];
+        addLog("🔄 Array reset");
+        updateDashboard();
+    }
+
+    // ─── LOG HELPER ─────────────────────────────────────
+    function addLog(message) {
+        const timestamp = new Date().toLocaleTimeString();
+        logEntries.unshift(`[${timestamp}] ${message}`);
+        if (logEntries.length > 8) logEntries.pop(); // Keep last 8 entries
+    }
+
+    // ─── MASTER UPDATE FUNCTION ─────────────────────────
+    function updateDashboard() {
+        const arrayDisplay = document.getElementById("array-display");
+        const logDisplay = document.getElementById("operation-log");
+        const caseStudyOutput = document.getElementById("case-study-output");
+        const methodsOutput = document.getElementById("methods-output");
+
+        // Always show log
+        logDisplay.innerText = logEntries.length ? logEntries.join("\n") : "No operations yet.";
+
+        // Empty state
+        if (userNumbers.length === 0) {
+            arrayDisplay.innerText = "Array is empty.";
+            caseStudyOutput.innerText = "Waiting for numbers...";
+            methodsOutput.innerText = "Waiting for numbers...";
+            return;
+        }
+
+        // 1. Current Array
+        arrayDisplay.innerText = `[ ${userNumbers.join(", ")} ]`;
+
+        // 2. Case Study: Max & Min via for loop
+        let min = userNumbers[0], max = userNumbers[0];
+        for (let i = 1; i < userNumbers.length; i++) {
+            if (userNumbers[i] > max) max = userNumbers[i];
+            if (userNumbers[i] < min) min = userNumbers[i];
+        }
+        caseStudyOutput.innerHTML =
+            `<span class="highlight-max">Maximum: ${max}</span>\n<span class="highlight-min">Minimum: ${min}</span>`;
+
+        // 3. Iterator Methods
+        // forEach() — build a labeled index string
+        let forEachResult = [];
+        userNumbers.forEach((n, i) => forEachResult.push(`[${i}]:${n}`));
+
+        // map() — double each value
+        const doubled = userNumbers.map(n => n * 2);
+
+        // filter() — keep values > 10
+        const filtered = userNumbers.filter(n => n > 10);
+
+        // reduce() — sum all values
+        const sum = userNumbers.reduce((acc, cur) => acc + cur, 0);
+
+        methodsOutput.innerText =
+            `forEach() indices:  ${forEachResult.join(" | ")}\n` +
+            `map() doubled:      [ ${doubled.join(", ")} ]\n` +
+            `filter() (>10):     [ ${filtered.join(", ")} ]\n` +
+            `reduce() sum:       ${sum}`;
+    }
+
+    // Enter key support
+    document.getElementById("num-input").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") addNumber();
+    });
+</script>
+
+</body>
+</html>
