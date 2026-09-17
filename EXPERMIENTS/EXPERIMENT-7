@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 3rem 1rem;
+        }
+
+        .todo-container {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Input Controls Row */
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            outline: none;
+            background-color: #fdfdfd;
+        }
+
+        .btn-add {
+            background-color: #2e6930;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-add:hover {
+            background-color: #245326;
+        }
+
+        /* List Items Container */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start; /* Changed to flex-start to align buttons nicely with long text rows */
+            background-color: #e6e6e6;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            gap: 12px;
+        }
+
+        .task-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 6px; /* Keeps checkbox vertically aligned with the first line of text */
+            flex-shrink: 0;
+        }
+
+        /* REMOVED WORD LIMITS: Converted from a restricted input box into a flexible auto-wrapping area */
+        .task-text {
+            flex: 1;
+            font-size: 1.05rem;
+            color: #222;
+            border: 1px solid transparent;
+            background: transparent;
+            word-break: break-word; /* Allows long strings without spaces to break cleanly */
+            white-space: pre-wrap;  /* Preserves naturally spaced long paragraphs */
+            padding: 4px;
+            min-height: 24px;
+            outline: none;
+        }
+
+        /* Active editing state visual polish */
+        .task-text[contenteditable="true"]:focus {
+            background: #fff;
+            border: 1px solid #e09612;
+            border-radius: 2px;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        /* Action Controls Buttons */
+        .btn-edit, .btn-delete {
+            flex-shrink: 0; /* Prevents control buttons from crushing or sizing down on long text rows */
+        }
+
+        .btn-edit {
+            background-color: #e09612;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-edit:hover {
+            background-color: #c4820f;
+        }
+
+        .btn-delete {
+            background-color: #cc1111;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete:hover {
+            background-color: #aa0e0e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        
+        <!-- Add Task Controls Grid Row -->
+        <div class="input-row">
+            <input type="text" id="newTaskInput" class="task-input" placeholder="Enter a task" onkeydown="if(event.key === 'Enter') handleAddTask()">
+            <button class="btn-add" onclick="handleAddTask()">Add</button>
+        </div>
+
+        <!-- Task Dynamic Output Wrapper -->
+        <div id="taskList" class="task-list">
+            <!-- Mock items preloaded using standard HTML block tags to allow multi-line wrapping -->
+            <div class="task-item">
+                <input type="checkbox" class="task-checkbox" onchange="toggleComplete(this)">
+                <div class="task-text" contenteditable="false">Experiment 07</div>
+                <button class="btn-edit" onclick="handleEditTask(this)">Edit</button>
+                <button class="btn-delete" onclick="handleDeleteTask(this)">Delete</button>
+            </div>
+            <div class="task-item">
+                <input type="checkbox" class="task-checkbox" onchange="toggleComplete(this)">
+                <div class="task-text" contenteditable="false">Case Study 7</div>
+                <button class="btn-edit" onclick="handleEditTask(this)">Edit</button>
+                <button class="btn-delete" onclick="handleDeleteTask(this)">Delete</button>
+            </div>
+            <div class="task-item">
+                <input type="checkbox" class="task-checkbox" onchange="toggleComplete(this)">
+                <div class="task-text" contenteditable="false">submission</div>
+                <button class="btn-edit" onclick="handleEditTask(this)">Edit</button>
+                <button class="btn-delete" onclick="handleDeleteTask(this)">Delete</button>
+            </div>
+            <div class="task-item">
+                <input type="checkbox" class="task-checkbox" onchange="toggleComplete(this)">
+                <div class="task-text" contenteditable="false">Execution</div>
+                <button class="btn-edit" onclick="handleEditTask(this)">Edit</button>
+                <button class="btn-delete" onclick="handleDeleteTask(this)">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interface Operational Logic Scripts -->
+    <script>
+        function handleAddTask() {
+            const inputField = document.getElementById('newTaskInput');
+            const taskContent = inputField.value.trim();
+            
+            if (taskContent === '') return;
+
+            const listContainer = document.getElementById('taskList');
+            
+            // Build task structure dynamically using text divs for multi-row wrap safety
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'task-item';
+            itemDiv.innerHTML = `
+                <input type="checkbox" class="task-checkbox" onchange="toggleComplete(this)">
+                <div class="task-text" contenteditable="false">${escapeHtml(taskContent)}</div>
+                <button class="btn-edit" onclick="handleEditTask(this)">Edit</button>
+                <button class="btn-delete" onclick="handleDeleteTask(this)">Delete</button>
+            `;
+            
+            listContainer.appendChild(itemDiv);
+            inputField.value = ''; // Clean prompt box smoothly
+        }
+
+        function handleDeleteTask(buttonElement) {
+            // Remove target element row instantly
+            buttonElement.parentElement.remove();
+        }
+
+        function handleEditTask(buttonElement) {
+            const parentRow = buttonElement.parentElement;
+            const textInput = parentRow.querySelector('.task-text');
+            
+            if (textInput.getAttribute('contenteditable') === 'false') {
+                // Turn on inline multi-line editing states
+                textInput.setAttribute('contenteditable', 'true');
+                textInput.focus();
+                
+                // Position typing indicator cleanly at the tail end of strings
+                const range = document.createRange();
+                const sel = window.getSelection();
+                range.selectNodeContents(textInput);
+                range.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                buttonElement.innerText = "Save";
+                buttonElement.style.backgroundColor = "#2e6930"; // Green accent feedback when saving
+            } else {
+                // Return safely to lock standard views
+                textInput.setAttribute('contenteditable', 'false');
+                buttonElement.innerText = "Edit";
+                buttonElement.style.backgroundColor = "#e09612"; // Revert back to original orange color code
+            }
+        }
+
+        function toggleComplete(checkboxElement) {
+            const parentRow = checkboxElement.parentElement;
+            if (checkboxElement.checked) {
+                parentRow.classList.add('completed');
+            } else {
+                parentRow.classList.remove('completed');
+            }
+        }
+
+        // Sanitization helper preventing markup breaking from raw symbols inside long notes
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
