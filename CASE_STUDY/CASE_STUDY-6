@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janhavi Admane 24070521211</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .result strong {
+            color: #764ba2;
+        }
+
+        .string-operations {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .operation-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .operation-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .stat-item .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔤 Janhavi Admane 24070521211</h1>
+
+        <!-- Case Study 1: Reverse String -->
+        <div class="section">
+            <h2>1. Reverse a String</h2>
+            <label for="inputString">Enter a string:</label>
+            <input type="text" id="inputString" placeholder="Type something to reverse...">
+            <button onclick="reverseString()">Reverse String</button>
+            <button onclick="clearReverse()">Clear</button>
+            <div id="reverseResult" class="result">
+                <strong>Reversed String:</strong> <span id="reversedText"></span>
+            </div>
+        </div>
+
+        <!-- Case Study 2: Count Vowels -->
+        <div class="section">
+            <h2>2. Count Vowels in a Paragraph</h2>
+            <label for="paragraph">Enter a paragraph:</label>
+            <textarea id="paragraph" placeholder="Type or paste your paragraph here..."></textarea>
+            <button onclick="countVowels()">Count Vowels</button>
+            <button onclick="clearVowels()">Clear</button>
+            <div id="vowelResult" class="result">
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="number" id="totalVowels">0</div>
+                        <div class="label">Total Vowels</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="totalConsonants">0</div>
+                        <div class="label">Consonants</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="totalChars">0</div>
+                        <div class="label">Total Characters</div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Vowel Details:</strong><br>
+                    <span id="vowelDetails"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- String Operations Demo -->
+        <div class="section">
+            <h2>3. String Operations Demo (substring, indexOf, split, replace)</h2>
+            <label for="demoString">Enter a string for operations:</label>
+            <input type="text" id="demoString" placeholder="Enter text to demonstrate operations...">
+            <button onclick="performOperations()">Perform Operations</button>
+            <div id="operationsResult" class="result">
+                <div class="string-operations">
+                    <div class="operation-box">
+                        <h3>substring(0, 5)</h3>
+                        <p id="substringResult">-</p>
+                    </div>
+                    <div class="operation-box">
+                        <h3>indexOf()</h3>
+                        <p id="indexOfResult">-</p>
+                    </div>
+                    <div class="operation-box">
+                        <h3>split()</h3>
+                        <p id="splitResult">-</p>
+                    </div>
+                    <div class="operation-box">
+                        <h3>replace()</h3>
+                        <p id="replaceResult">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Case Study 1: Reverse String
+        function reverseString() {
+            const input = document.getElementById('inputString').value;
+            if (input.trim() === '') {
+                alert('Please enter a string first!');
+                return;
+            }
+            const reversed = input.split('').reverse().join('');
+            document.getElementById('reversedText').textContent = reversed;
+            document.getElementById('reverseResult').classList.add('show');
+        }
+
+        function clearReverse() {
+            document.getElementById('inputString').value = '';
+            document.getElementById('reverseResult').classList.remove('show');
+        }
+
+        // Case Study 2: Count Vowels
+        function countVowels() {
+            const text = document.getElementById('paragraph').value;
+            if (text.trim() === '') {
+                alert('Please enter a paragraph first!');
+                return;
+            }
+
+            const vowels = text.match(/[aeiouAEIOU]/g) || [];
+            const consonants = text.match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g) || [];
+            const totalChars = text.replace(/\s/g, '').length;
+
+            document.getElementById('totalVowels').textContent = vowels.length;
+            document.getElementById('totalConsonants').textContent = consonants.length;
+            document.getElementById('totalChars').textContent = totalChars;
+
+            // Count individual vowels
+            const vowelCount = {
+                'a': 0, 'e': 0, 'i': 0, 'o': 0, 'u': 0
+            };
+
+            text.toLowerCase().split('').forEach(char => {
+                if (vowelCount.hasOwnProperty(char)) {
+                    vowelCount[char]++;
+                }
+            });
+
+            let details = '<ul style="margin-top: 10px; padding-left: 20px;">';
+            for (let vowel in vowelCount) {
+                details += `<li><strong>${vowel.toUpperCase()}:</strong> ${vowelCount[vowel]} times</li>`;
+            }
+            details += '</ul>';
+            document.getElementById('vowelDetails').innerHTML = details;
+
+            document.getElementById('vowelResult').classList.add('show');
+        }
+
+        function clearVowels() {
+            document.getElementById('paragraph').value = '';
+            document.getElementById('vowelResult').classList.remove('show');
+        }
+
+        // String Operations Demo
+        function performOperations() {
+            const str = document.getElementById('demoString').value;
+            if (str.trim() === '') {
+                alert('Please enter a string first!');
+                return;
+            }
+
+            // substring
+            document.getElementById('substringResult').textContent = str.substring(0, 5);
+
+            // indexOf (find first space)
+            const spaceIndex = str.indexOf(' ');
+            document.getElementById('indexOfResult').textContent = spaceIndex !== -1
+                ? `First space at position: ${spaceIndex}`
+                : 'No space found';
+
+            // split
+            const words = str.split(' ');
+            document.getElementById('splitResult').textContent = `Words: ${words.length}\n[${words.join(', ')}]`;
+
+            // replace
+            const replaced = str.replace(/\s/g, '-');
+            document.getElementById('replaceResult').textContent = `Spaces to -: ${replaced}`;
+
+            document.getElementById('operationsResult').classList.add('show');
+        }
+    </script>
+</body>
+</html>
