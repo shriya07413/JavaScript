@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text & Email Toolkit</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 540px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+            background: linear-gradient(45deg, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-main);
+            background-color: var(--card-bg);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 8px;
+        }
+
+        /* Counter Styles */
+        .counter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .counter-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .counter-card span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.1);
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.15);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .result-box {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .case-output {
+            background-color: #f3f4f6;
+            border-left: 4px solid var(--primary);
+            color: var(--text-main);
+            word-break: break-word;
+        }
+
+        .status-valid {
+            background-color: #ecfdf5;
+            border-left: 4px solid var(--success);
+            color: #065f46;
+        }
+
+        .status-invalid {
+            background-color: #fef2f2;
+            border-left: 4px solid var(--error);
+            color: #991b1b;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, rgba(0,0,0,0), var(--border), rgba(0,0,0,0));
+            margin: 32px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>JANHAVI ADMANE (24070521211)</h1>
+    <div class="subtitle">Format paragraphs & verify email criteria instantly</div>
+    
+    <!-- Case Converter & Counter Section -->
+    <div class="section">
+        <label for="paragraph">Your Paragraph</label>
+        <textarea id="paragraph" placeholder="Type or paste your text here..." oninput="updateCounters()"></textarea>
+        
+        <!-- Live Counters -->
+        <div class="counter-grid">
+            <div class="counter-card">Words: <span id="wordCount">0</span></div>
+            <div class="counter-card">Letters: <span id="letterCount">0</span></div>
+        </div>
+
+        <button onclick="swapCase()">Invert Case</button>
+        <div class="result-box case-output" id="caseResult"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Email Validator Section -->
+    <div class="section">
+        <label for="email">Email Address</label>
+        <input type="text" id="email" placeholder="name@example.com">
+        <button onclick="validateEmail()">Verify System Identity</button>
+        <div class="result-box" id="emailResult"></div>
+    </div>
+</div>
+
+<script>
+// Real-time metrics tracking
+function updateCounters() {
+    const text = document.getElementById("paragraph").value;
+    
+    // Count only letters (excluding spaces, numbers, and symbols)
+    const totalLetters = text.replace(/[^a-zA-Z]/g, "").length;
+    
+    // Count exact words by splitting string and filtering empty strings
+    const cleanText = text.trim();
+    const totalWords = cleanText === "" ? 0 : cleanText.split(/\s+/).length;
+
+    document.getElementById("wordCount").innerText = totalWords;
+    document.getElementById("letterCount").innerText = totalLetters;
+}
+
+function swapCase() {
+    const input = document.getElementById("paragraph").value.trim();
+    const resultDiv = document.getElementById("caseResult");
+    
+    if (!input) {
+        resultDiv.style.display = "none";
+        return;
+    }
+
+    let swapped = "";
+    for (let char of input) {
+        if (char === char.toUpperCase()) {
+            swapped += char.toLowerCase();
+        } else {
+            swapped += char.toUpperCase();
+        }
+    }
+    
+    resultDiv.innerText = swapped;
+    resultDiv.style.display = "block";
+}
+
+function validateEmail() {
+    const email = document.getElementById("email").value.trim();
+    const resultDiv = document.getElementById("emailResult");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+        resultDiv.style.display = "none";
+        return;
+    }
+
+    resultDiv.className = "result-box"; 
+    resultDiv.style.display = "block";
+
+    if (emailRegex.test(email)) {
+        resultDiv.innerText = "✓ This is a valid email format.";
+        resultDiv.classList.add("status-valid");
+    } else {
+        resultDiv.innerText = "✗ Invalid email format. Please check for errors.";
+        resultDiv.classList.add("status-invalid");
+    }
+}
+</script>
+
+</body>
+</html>
