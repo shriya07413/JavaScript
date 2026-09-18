@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Settings Manager</title>
+    <style>
+        /* Modern Reset and Layout Engine */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-h-screen: 100vh;
+            min-height: 100vh;
+            background-color: #343a40;
+            color: #ffffff;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Card container layout matching your original mockup */
+        .card {
+            background-color: #212529;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #2d3238;
+            margin: 1rem;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .header-icon {
+            color: #f472b6;
+        }
+        .subtitle {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Flexible Grid Actions */
+        .btn-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        button {
+            width: 100%;
+            border: none;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.65rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s ease, filter 0.2s ease;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        button:hover {
+            filter: brightness(1.1);
+        }
+        
+        /* Functional Palette Colors */
+        .btn-blue { background-color: #2563eb; }
+        .btn-green { background-color: #16a34a; margin-bottom: 0.75rem; }
+        .btn-rose { background-color: #e11d48; margin-top: 1rem; }
+
+        /* Storage Tracking Status block */
+        .status-container {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2d3238;
+            text-align: left;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.75rem;
+        }
+        .status-title {
+            color: #9ca3af;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-box {
+            background-color: #1a1d20;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #2d3238;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+        .status-val {
+            font-weight: 700;
+            color: #9ca3af;
+        }
+
+        /* Light Theme Dynamic Classes */
+        body.light-mode {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            border-color: #d1d5db;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode h1 { color: #111827; }
+        body.light-mode .subtitle { color: #4b5563; }
+        body.light-mode .status-title { color: #4b5563; }
+        body.light-mode .status-box {
+            background-color: #f9fafb;
+            border-color: #e5e7eb;
+            color: #374151;
+        }
+    </style>
+</head>
+<body id="body-bg">
+
+    <!-- Main Container Card -->
+    <div class="card">
+        
+        <!-- Header -->
+        <h1><span class="header-icon">🎨</span> Theme Settings</h1>
+        <p class="subtitle">Pick a theme and choose how you want to save it.</p>
+
+        <!-- Button Grid Container -->
+        <div>
+            <!-- Local Storage Rules -->
+            <div class="btn-row">
+                <button id="btn-dark-local" class="btn-blue">✓ Dark (Save Local)</button>
+                <button id="btn-light-local" class="btn-blue">● Light (Save Local)</button>
+            </div>
+
+            <!-- Session Storage Rules -->
+            <button id="btn-dark-session" class="btn-green">✓ Dark (Save Session)</button>
+            <button id="btn-light-session" class="btn-green">● Light (Save Session)</button>
+
+            <!-- Reset Action -->
+            <button id="btn-clear" class="btn-rose">🗑 Clear All Preferences</button>
+        </div>
+
+        <!-- Storage Status Visualizer -->
+        <div class="status-container" id="status-divider">
+            <div class="status-title">Storage Status:</div>
+            <div class="status-box">
+                <div>LocalStorage: <span id="status-local" class="status-val">Empty</span></div>
+                <div>SessionStorage: <span id="status-session" class="status-val">Empty</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Active Local Logic System -->
+    <script>
+        const bodyBg = document.getElementById('body-bg');
+        const statusLocal = document.getElementById('status-local');
+        const statusSession = document.getElementById('status-session');
+
+        function syncInterfaceAndStorageState() {
+            const localVal = localStorage.getItem('theme');
+            const sessionVal = sessionStorage.getItem('theme');
+
+            // 1. Update text content outputs
+            statusLocal.textContent = localVal ? localVal.toUpperCase() : 'Empty';
+            statusSession.textContent = sessionVal ? sessionVal.toUpperCase() : 'Empty';
+            
+            // 2. Dynamic Text Colors highlighting
+            statusLocal.style.color = localVal ? '#60a5fa' : '#9ca3af';
+            statusSession.style.color = sessionVal ? '#4ade80' : '#9ca3af';
+
+            // 3. Fallback priority theme evaluation rule
+            const activeTheme = sessionVal || localVal || 'dark';
+
+            if (activeTheme === 'light') {
+                bodyBg.classList.add('light-mode');
+            } else {
+                bodyBg.classList.remove('light-mode');
+            }
+        }
+
+        // Action Interceptors
+        document.getElementById('btn-dark-local').addEventListener('click', () => {
+            localStorage.setItem('theme', 'dark');
+            syncInterfaceAndStorageState();
+        });
+
+        document.getElementById('btn-light-local').addEventListener('click', () => {
+            localStorage.setItem('theme', 'light');
+            syncInterfaceAndStorageState();
+        });
+
+        document.getElementById('btn-dark-session').addEventListener('click', () => {
+            sessionStorage.setItem('theme', 'dark');
+            syncInterfaceAndStorageState();
+        });
+
+        document.getElementById('btn-light-session').addEventListener('click', () => {
+            sessionStorage.setItem('theme', 'light');
+            syncInterfaceAndStorageState();
+        });
+
+        document.getElementById('btn-clear').addEventListener('click', () => {
+            localStorage.removeItem('theme');
+            sessionStorage.removeItem('theme');
+            syncInterfaceAndStorageState();
+        });
+
+        // Initialize state engine layout right away
+        syncInterfaceAndStorageState();
+    </script>
+</body>
+</html>
