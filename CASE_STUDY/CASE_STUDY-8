@@ -1,0 +1,660 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Online Job Application Form</title>
+
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+
+body {
+background: #b1c9ee;
+padding: 30px;
+}
+
+.container {
+max-width: 900px;
+margin: auto;
+background: #fafcff;
+padding: 35px;
+border-radius: 15px;
+box-shadow: 0 5px 20px rgba(85, 32, 32, 0.12);
+}
+
+h1 {
+text-align: center;
+color: #222;
+margin-bottom: 10px;
+}
+
+.subtitle {
+text-align: center;
+color: #666;
+margin-bottom: 30px;
+}
+
+.section {
+margin-bottom: 30px;
+padding: 20px;
+border: 1px solid #ddd;
+border-radius: 10px;
+}
+
+.section h2 {
+color: #333;
+margin-bottom: 18px;
+border-bottom: 2px solid #e0228b;
+padding-bottom: 8px;
+}
+
+.row {
+display: flex;
+gap: 20px;
+}
+
+.form-group {
+flex: 1;
+margin-bottom: 18px;
+}
+
+label {
+display: block;
+font-weight: bold;
+margin-bottom: 7px;
+color: #500f0f;
+}
+
+input,
+select,
+textarea {
+width: 100%;
+padding: 11px;
+border: 1px solid #bbb;
+border-radius: 7px;
+font-size: 15px;
+outline: none;
+transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+border-color: #5cc732;
+box-shadow: 0 0 5px rgba(79, 70, 229, 0.2);
+}
+
+textarea {
+resize: vertical;
+min-height: 80px;
+}
+
+.error {
+color: #dc2626;
+font-size: 13px;
+margin-top: 5px;
+display: none;
+}
+
+.invalid {
+border: 2px solid #dc2626;
+}
+
+.valid {
+border: 2px solid #16a34a;
+}
+
+.skills {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+margin-top: 10px;
+}
+
+.skills label {
+font-weight: normal;
+}
+
+.skills input {
+width: auto;
+margin-right: 5px;
+}
+
+.buttons {
+display: flex;
+justify-content: center;
+gap: 15px;
+margin-top: 20px;
+}
+
+button {
+padding: 13px 30px;
+border: none;
+border-radius: 8px;
+font-size: 16px;
+cursor: pointer;
+}
+
+#submitBtn {
+background: #4f46e5;
+color: white;
+}
+
+#submitBtn:hover {
+background: #3730a3;
+}
+
+#resetBtn {
+background: #e5e7eb;
+color: #222;
+}
+
+#resetBtn:hover {
+background: #d1d5db;
+}
+
+#successMessage {
+display: none;
+background: #dcfce7;
+color: #166534;
+padding: 15px;
+margin-top: 20px;
+border-radius: 8px;
+text-align: center;
+font-weight: bold;
+}
+
+.required {
+color: red;
+}
+
+@media (max-width: 650px) {
+.row {
+flex-direction: column;
+gap: 0;
+}
+
+body {
+padding: 10px;
+}
+
+.container {
+padding: 20px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>JANHAVI ADMANE</h1>
+<p class="subtitle">
+Please enter your details carefully. All required fields must be valid before submission.
+</p>
+
+<form id="jobForm">
+
+<!-- PERSONAL INFORMATION -->
+<div class="section">
+
+<h2>Personal Information</h2>
+
+<div class="row">
+
+<div class="form-group">
+<label>Full Name <span class="required">*</span></label>
+
+<input type="text" id="fullName" placeholder="Enter your full name">
+
+<div class="error" id="nameError">
+Please enter a valid name.
+</div>
+</div>
+
+<div class="form-group">
+<label>Date of Birth <span class="required">*</span></label>
+
+<input type="date" id="dob">
+
+<div class="error" id="dobError">
+Please enter your date of birth.
+</div>
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Gender <span class="required">*</span></label>
+
+<select id="gender">
+
+<option value="">Select Gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+
+</select>
+
+<div class="error" id="genderError">
+Please select your gender.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Email <span class="required">*</span></label>
+
+<input type="email"
+id="email"
+placeholder="example@gmail.com">
+
+<div class="error" id="emailError">
+Please enter a valid email address.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Mobile Number <span class="required">*</span></label>
+
+<input type="text"
+id="mobile"
+placeholder="10 digit mobile number"
+maxlength="10">
+
+<div class="error" id="mobileError">
+Mobile number must contain exactly 10 digits.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Address <span class="required">*</span></label>
+
+<input type="text"
+id="address"
+placeholder="Enter your address">
+
+<div class="error" id="addressError">
+Please enter your address.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>City / State / PIN Code <span class="required">*</span></label>
+
+<input type="text"
+id="location"
+placeholder="Example: Pune, Maharashtra - 411001">
+
+<div class="error" id="locationError">
+Please enter your city, state and PIN code.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- EDUCATIONAL QUALIFICATION -->
+<div class="section">
+
+<h2>Educational Qualification</h2>
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Highest Qualification <span class="required">*</span></label>
+
+<select id="qualification">
+
+<option value="">Select Qualification</option>
+<option value="10th">10th</option>
+<option value="12th">12th</option>
+<option value="Diploma">Diploma</option>
+<option value="Bachelor's">Bachelor's Degree</option>
+<option value="Master's">Master's Degree</option>
+<option value="PhD">PhD</option>
+
+</select>
+
+<div class="error" id="qualificationError">
+Please select your qualification.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>University / Institute <span class="required">*</span></label>
+
+<input type="text"
+id="university"
+placeholder="Enter university/institute">
+
+<div class="error" id="universityError">
+Please enter your university or institute.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Passing Year <span class="required">*</span></label>
+
+<input type="number"
+id="passingYear"
+placeholder="Example: 2025">
+
+<div class="error" id="yearError">
+Enter a valid passing year.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Percentage / CGPA <span class="required">*</span></label>
+
+<input type="number"
+id="percentage"
+placeholder="Example: 85 or 8.5"
+step="0.01">
+
+<div class="error" id="percentageError">
+Please enter a valid percentage or CGPA.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PROFESSIONAL INFORMATION -->
+<div class="section">
+
+<h2>Professional Information</h2>
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Applying For / Job Position <span class="required">*</span></label>
+
+<input type="text"
+id="position"
+placeholder="Example: Software Developer">
+
+<div class="error" id="positionError">
+Please enter the job position.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Total Work Experience <span class="required">*</span></label>
+
+<select id="experience">
+
+<option value="">Select Experience</option>
+<option value="Fresher">Fresher</option>
+<option value="0-1">0 - 1 Year</option>
+<option value="1-3">1 - 3 Years</option>
+<option value="3-5">3 - 5 Years</option>
+<option value="5+">More than 5 Years</option>
+
+</select>
+
+<div class="error" id="experienceError">
+Please select your experience.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="form-group">
+
+<label>Current / Previous Organization</label>
+
+<input type="text"
+id="organization"
+placeholder="Company name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Current Designation</label>
+
+<input type="text"
+id="designation"
+placeholder="Example: Intern">
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Expected Salary <span class="required">*</span></label>
+
+<input type="number"
+id="salary"
+placeholder="Enter expected salary">
+
+<div class="error" id="salaryError">
+Please enter a valid expected salary.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TECHNICAL SKILLS -->
+<div class="section">
+
+<h2>Technical Skills</h2>
+
+<div class="form-group">
+
+<label>Programming Languages <span class="required">*</span></label>
+
+<div class="skills">
+
+<label>
+<input type="checkbox" name="language" value="C">
+C
+</label>
+
+<label>
+<input type="checkbox" name="language" value="C++">
+C++
+</label>
+
+<label>
+<input type="checkbox" name="language" value="Java">
+Java
+</label>
+
+<label>
+<input type="checkbox" name="language" value="Python">
+Python
+</label>
+
+<label>
+<input type="checkbox" name="language" value="JavaScript">
+JavaScript
+</label>
+
+<label>
+<input type="checkbox" name="language" value="HTML/CSS">
+HTML/CSS
+</label>
+
+</div>
+
+<div class="error" id="languageError">
+Please select at least one programming language.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Technical Skills</label>
+
+<textarea id="technicalSkills"
+placeholder="Example: React, Node.js, MongoDB, Git..."></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Certifications</label>
+
+<textarea id="certifications"
+placeholder="Enter your certifications"></textarea>
+
+</div>
+
+</div>
+
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+
+<button type="submit" id="submitBtn">
+Submit Application
+</button>
+
+<button type="reset" id="resetBtn">
+Reset
+</button>
+
+</div>
+
+
+<div id="successMessage">
+✅ Application submitted successfully!
+</div>
+
+</form>
+
+</div>
+
+
+<script>
+
+// Get the form
+const form = document.getElementById("jobForm");
+
+
+// Function to show error
+function showError(input, errorElement) {
+
+input.classList.add("invalid");
+input.classList.remove("valid");
+
+errorElement.style.display = "block";
+}
+
+
+// Function to show valid input
+function showValid(input, errorElement) {
+
+input.classList.remove("invalid");
+input.classList.add("valid");
+
+errorElement.style.display = "none";
+}
+
+
+// Validate Full Name
+function validateName() {
+
+const name = document.getElementById("fullName");
+const error = document.getElementById("nameError");
+
+const namePattern = /^[A-Za-z ]{3,}$/;
+
+if (!namePattern.test(name.value.trim())) {
+
+showError(name, error);
+return false;
+
+} else {
+
+showValid(name, error);
+return true;
+
+}
+}
+
+
+// Validate Date of Birth
+function validateDOB() {
+
+const dob = document.getElementById("dob");
+const error = document.getElementById("dobError");
+
+if (dob.value === "") {
+
+showError(dob, error);
+return false;
+
+}
+
+const selectedDate = new Date(dob.value);
+const today = new Date();
+
+if (selectedDate >= today) {
+
+showError(
